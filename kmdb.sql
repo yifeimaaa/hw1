@@ -93,10 +93,54 @@
 .mode column
 .headers off
 
--- Drop existing tables, so you'll start fresh each time this script is run.
+-- Drop existing tables, so you'll start fresh each time this script is run. 
+DROP TABLE IF EXISTS studio;
+DROP TABLE IF EXISTS movie;
+DROP TABLE IF EXISTS topcast;
+DROP TABLE IF EXISTS agent;
+DROP TABLE IF EXISTS character;
+
 -- TODO!
 
 -- Create new tables, according to your domain model
+
+CREATE TABLE studio (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT
+);
+
+CREATE TABLE agent (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT
+);
+
+CREATE TABLE movie (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    title TEXT,
+    year INTEGER,
+    mpaa TEXT,
+    studio_id INTEGER,
+    FOREIGN KEY (studio_id) REFERENCES studio(id)
+);
+
+CREATE TABLE topcast (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    agent_id INTEGER,
+    FOREIGN KEY (agent_id) REFERENCES agent(id)
+);
+
+CREATE TABLE character (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    charactername TEXT,
+    movie_id INTEGER,
+    topcast_id INTEGER,
+    FOREIGN KEY (movie_id) REFERENCES movie(id),
+    FOREIGN KEY (topcast_id) REFERENCES topcast(id)
+);
+
+
+
 -- TODO!
 
 -- Insert data into your database that reflects the sample data shown above

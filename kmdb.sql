@@ -140,11 +140,64 @@ CREATE TABLE character (
 );
 
 
-
 -- TODO!
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
+
+-- insert studio
+INSERT INTO studio (id, name) VALUES (1, 'Warner Bros.');
+
+-- insert agent
+INSERT INTO agent (id, name) VALUES (1, 'William Morris Endeavor');
+INSERT INTO agent (id, name) VALUES (2, 'Creative Artists Agency');
+INSERT INTO agent (id, name) VALUES (3, 'United Talent Agency');
+
+-- insert movie
+INSERT INTO movie (id, title, year, mpaa, studio_id) VALUES (1, 'Batman Begins', 2005, 'PG-13', 1);
+INSERT INTO movie (id, title, year, mpaa, studio_id) VALUES (2, 'The Dark Knight', 2008, 'PG-13', 1);
+INSERT INTO movie (id, title, year, mpaa, studio_id) VALUES (3, 'The Dark Knight Rises', 2012, 'PG-13', 1);
+
+-- insert topcast
+INSERT INTO topcast (id, name, agent_id) VALUES (1, 'Christian Bale', 2);
+INSERT INTO topcast (id, name, agent_id) VALUES (2, 'Michael Caine', 3);
+INSERT INTO topcast (id, name, agent_id) VALUES (3, 'Liam Neeson', 2);
+INSERT INTO topcast (id, name, agent_id) VALUES (4, 'Katie Holmes', 3);
+INSERT INTO topcast (id, name, agent_id) VALUES (5, 'Gary Oldman', 3);
+INSERT INTO topcast (id, name, agent_id) VALUES (6, 'Heath Ledger', 2);
+INSERT INTO topcast (id, name, agent_id) VALUES (7, 'Aaron Eckhart', 2);
+INSERT INTO topcast (id, name, agent_id) VALUES (8, 'Maggie Gyllenhaal', 2);
+INSERT INTO topcast (id, name, agent_id) VALUES (9, 'Tom Hardy', 2);
+INSERT INTO topcast (id, name, agent_id) VALUES (10, 'Joseph Gordon-Levitt', 2);
+INSERT INTO topcast (id, name, agent_id) VALUES (11, 'Anne Hathaway', 2);
+
+-- insert character
+-- Batman Begins
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Bruce Wayne', 1, 1);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Alfred', 1, 2);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Ra''s Al Ghul', 1, 3);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Rachel Dawes', 1, 4);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Commissioner Gordon', 1, 5);
+-- The Dark Knight
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Bruce Wayne', 2, 1);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Joker', 2, 6);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Harvey Dent', 2, 7);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Alfred', 2, 2);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Rachel Dawes', 2, 8);
+-- The Dark Knight Rises
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Bruce Wayne', 3, 1);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Commissioner Gordon', 3, 5);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Bane', 3, 9);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('John Blake', 3, 10);
+INSERT INTO character (charactername, movie_id, topcast_id) VALUES ('Selina Kyle', 3, 11);
+
+
+-- update agent
+UPDATE topcast
+SET agent_id = 1
+WHERE id = 1;
+
+
 -- TODO!
 
 -- Prints a header for the movies output
@@ -154,6 +207,14 @@ CREATE TABLE character (
 
 -- ***TODO!***
 -- The SQL statement for the movies output goes here.
+
+SELECT  
+    movie.title, 
+    movie.year, 
+    movie.mpaa, 
+    studio.name
+FROM movie
+JOIN studio ON movie.studio_id = studio.id;
 
 -- Example output:
 -- Movies
@@ -170,6 +231,14 @@ CREATE TABLE character (
 
 -- ***TODO!***
 -- The SQL statement for the cast output goes here.
+
+SELECT 
+    movie.title, 
+    topcast.name, 
+    character.charactername
+FROM character
+JOIN movie ON character.movie_id = movie.id
+JOIN topcast ON character.topcast_id = topcast.id;
 
 -- Example output:
 -- Top Cast
@@ -199,6 +268,10 @@ CREATE TABLE character (
 -- ***TODO!***
 -- The SQL statement for the represented actor(s) output goes here.
 
+SELECT topcast.name
+FROM topcast
+JOIN agent ON topcast.agent_id = agent.id
+WHERE agent.id = 1;
 -- Example output:
 -- Represented by agent
 -- ====================
